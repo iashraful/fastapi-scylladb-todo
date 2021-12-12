@@ -1,0 +1,29 @@
+version: "3.7"
+
+services:
+  scylla_db:
+    image: scylladb/scylla:latest
+    restart: always
+    container_name: scylla_db
+    env_file:
+      - ./.env
+    expose:
+      - 9042
+    ports:
+      - "9042:9042"
+  python_app:
+    build: ./
+    restart: always
+    container_name: fastapi_scylla
+    command: sh -c "uvicorn app:app --host=0.0.0.0 --reload"
+    working_dir: /app
+    env_file:
+      - ./.env
+    volumes:
+      - ./:/app:cached
+    expose:
+      - 8000
+    ports:
+      - "7001:8000"
+    depends_on:
+      - scylla_db
