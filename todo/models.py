@@ -11,4 +11,4 @@ class Task(Model):
     id = columns.UUID(primary_key=True)
     title = columns.Text(min_length=3, max_length=255)
     description = columns.Text(min_length=0, max_length=512)
-    is_compleated = columns.Boolean(default=False)
+    is_completed = columns.Boolean(default=False)

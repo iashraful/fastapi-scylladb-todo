@@ -1,8 +1,13 @@
 import os
+from typing import NewType
 
 from cassandra.cluster import Cluster, Session
 
-_client: Session = None
+DBSession = NewType("DBSession", Session)
+
+
+
+_client: DBSession = None
 
 
 async def get_db_client():

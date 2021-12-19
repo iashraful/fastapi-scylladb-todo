@@ -7,6 +7,7 @@ from fastapi import FastAPI
 
 from todo.db import close_connection_to_database, connect_to_database, get_db_client
 from todo.models import Task
+from todo.routes import todo_router
 
 app = FastAPI()
 
@@ -28,6 +29,9 @@ async def shutdown_db_client():
 @app.get("/")
 def read_root():
     return {"msg": "Hello, World"}
+
+
+app.include_router(todo_router, prefix="/api/v1")
 
 
 if __name__ == "__main__":
