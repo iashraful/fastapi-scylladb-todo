@@ -20,7 +20,9 @@ class TaskView:
         return [TaskSchema(**r) for r in result]
 
     @staticmethod
-    async def create(task: TaskCreateSchema, db: DBSession = Depends(get_db_client)):
+    async def create(
+        task: TaskCreateSchema, db: DBSession = Depends(get_db_client)
+    ) -> TaskResponse:
         result = Task.create(
             id=uuid.uuid4(), title=task.title, description=task.description
         )
@@ -36,4 +38,4 @@ class TaskView:
             description=task.description,
             is_completed=task.is_completed,
         )
-        return TaskResponse(data=TaskSchema(*result))
+        return TaskResponse(data=TaskSchema(**result))
